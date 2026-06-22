@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,6 @@
 <meta name="theme-color" content="#071426">
 
 <style>
-
 *{
 margin:0;
 padding:0;
@@ -20,10 +20,7 @@ font-family:Arial,sans-serif;
 
 body{
 background:
-linear-gradient(
-rgba(0,0,0,.65),
-rgba(0,0,0,.85)
-),
+linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.85)),
 url("stadion.jpg");
 
 background-size:cover;
@@ -33,2268 +30,470 @@ background-attachment:fixed;
 color:white;
 overflow:hidden;
 }
-
-/* BOKI */
-
-.left-wall{
-position:fixed;
-left:0;
-top:0;
-height:100%;
-width:120px;
-
-background:
-linear-gradient(
-90deg,
-rgba(0,0,0,.9),
-transparent
-);
-
-pointer-events:none;
-z-index:1;
-}
-
-.right-wall{
-position:fixed;
-right:0;
-top:0;
-height:100%;
-width:120px;
-
-background:
-linear-gradient(
-270deg,
-rgba(0,0,0,.9),
-transparent
-);
-
-pointer-events:none;
-z-index:1;
-}
-
-/* LOADING */
-
-#loading{
-position:fixed;
-inset:0;
-background:#071426;
-
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-
-z-index:9999;
-}
-
-#loading img{
-width:220px;
-animation:pulse 2s infinite;
-}
-
-#loading h1{
-margin-top:20px;
-font-size:42px;
-}
-
-.loader{
-
-width:60px;
-height:60px;
-
-border:6px solid rgba(255,255,255,.2);
-border-top:6px solid #3cff00;
-
-border-radius:50%;
-
-margin-top:25px;
-
-animation:spin 1s linear infinite;
-}
-
-@keyframes spin{
-100%{
-transform:rotate(360deg);
-}
-}
-
-@keyframes pulse{
-50%{
-transform:scale(1.05);
-}
-}
-
-/* APP */
-
-#app{
-display:none;
-height:100vh;
-}
-
-.header{
-
-height:70px;
-
-background:
-rgba(0,0,0,.45);
-
-backdrop-filter:blur(10px);
-
-display:flex;
-justify-content:center;
-align-items:center;
-
-font-size:30px;
-font-weight:bold;
-
-}
-
-/* PROFIL */
-
-.profile{
-
-position:fixed;
-
-top:15px;
-right:15px;
-
-display:flex;
-align-items:center;
-
-gap:10px;
-
-padding:10px;
-
-border-radius:15px;
-
-background:
-rgba(255,255,255,.1);
-
-backdrop-filter:blur(10px);
-
-cursor:pointer;
-
-z-index:100;
-
-}
-
-.profile img{
-
-width:45px;
-height:45px;
-
-border-radius:50%;
-
-object-fit:cover;
-
-}
-
-.balance{
-
-color:#3cff00;
-
-font-weight:bold;
-
-text-shadow:
-0 0 10px #3cff00;
-
-font-size:13px;
-
-}
-
-/* CONTENT */
-
-.content{
-padding:25px;
-}
-
-/* KARTA */
-
-.card{
-
-background:
-rgba(0,0,0,.45);
-
-backdrop-filter:blur(10px);
-
-padding:20px;
-
-border-radius:15px;
-
-margin-top:20px;
-
-text-align:center;
-
-}
-
-/* MENU */
-
-.bottom{
-
-position:fixed;
-
-bottom:0;
-left:0;
-
-width:100%;
-height:70px;
-
-display:flex;
-
-background:
-rgba(0,0,0,.65);
-
-backdrop-filter:blur(10px);
-
-}
-
-.bottom button{
-
-flex:1;
-
-border:none;
-
-background:none;
-
-color:white;
-
-font-weight:bold;
-
-cursor:pointer;
-
-}
-
-.bottom button.active{
-
-background:
-rgba(60,255,0,.2);
-
-}
-
 </style>
-
 </head>
 
-<body>
+  <body>
 
+<!-- WALL EFFECT -->
 <div class="left-wall"></div>
 <div class="right-wall"></div>
 
+<!-- LOADING SCREEN -->
 <div id="loading">
-
-<img src="logo.png">
-
-<h1>
-MAKS BET
-</h1>
-
-<div class="loader"></div>
-
+  <h1>MAKS BET</h1>
+  <div class="loader"></div>
 </div>
 
+<!-- APP -->
 <div id="app">
 
-<div class="header">
+  <!-- HEADER -->
+  <div class="header">
+    MAKS BET
+  </div>
 
-MAKS BET
+  <!-- CONTENT -->
+  <div class="content">
 
-</div>
+    <!-- NAJBLIŻSZE MECZE -->
+    <div id="tab-matches" class="tab">
+      <div class="card">
+        <h2>Najbliższe spotkania</h2>
+        <div id="matchesList">
+          Brak meczy do wyświetlenia
+        </div>
+      </div>
+    </div>
 
-<div
-class="profile"
-onclick="openProfile()">
+    <!-- WSZYSTKIE MECZE -->
+    <div id="tab-all" class="tab" style="display:none;">
+      <div class="card">
+        <h2>Wszystkie spotkania</h2>
+        <div id="allMatches">
+          Ładowanie...
+        </div>
+      </div>
+    </div>
 
-<img src="flaga.jpg">
+    <!-- KUPON -->
+    <div id="tab-kupon" class="tab" style="display:none;">
+      <div class="card">
+        <h2>Twój kupon</h2>
+        <div id="coupon">
+          Brak zakładów
+        </div>
+      </div>
+    </div>
 
-<div>
+  </div>
 
-<div id="nickDisplay">
-
-Gracz03
-
-</div>
-
-<div
-class="balance"
-id="balanceDisplay">
-
-0.00 zł
-
-</div>
-
-</div>
-
-</div>
-
-<div
-class="content"
-id="content">
-
-<div class="card">
-
-<h2>
-Najbliższe spotkania
-</h2>
-
-<br>
-
-<p>
-Brak meczy do wyświetlenia
-</p>
-
-</div>
+  <!-- BOTTOM MENU -->
+  <div class="bottom">
+    <button onclick="showTab('matches')" class="active">Mecze</button>
+    <button onclick="showTab('all')">Wszystkie</button>
+    <button onclick="showTab('kupon')">Kupon</button>
+  </div>
 
 </div>
 
-<div class="bottom">
-
-<button
-class="active"
-onclick="tab(this,'near')">
-
-Najbliższe spotkania
-
-</button>
-
-<button
-onclick="tab(this,'all')">
-
-Wszystkie spotkania
-
-</button>
-
-<button
-onclick="tab(this,'bets')">
-
-Twój kupon
-
-</button>
-
-</div>
-
-</div>
-
-<!-- PROFIL -->
-
-<div
-class="modal"
-id="profileModal">
-
-<div class="modal-box">
-
-<h3>
-
-Profil
-
-</h3>
-
-<p>
-
-Nick:
-
-<span id="menuNick">
-
-Gracz03
-
-</span>
-
-</p>
-
-<p
-style="
-margin-top:10px;
-">
-
-Saldo:
-
-<span id="menuBalance">
-
-0.00 zł
-
-</span>
-
-</p>
-
-<button
-class="green"
-onclick="openNickModal()">
-
-Zmień nick
-
-</button>
-
-<button
-class="green"
-onclick="openDeposit()">
-
-Wpłać środki
-
-</button>
-
-<hr
-style="
-margin-top:20px;
-margin-bottom:15px;
-border:1px solid rgba(255,255,255,.1);
-">
-
-<p
-style="
-color:#ff4d4d;
-font-size:12px;
-text-align:center;
-line-height:18px;
-">
-
-⚠️ MAKS BET V5
-
-<br><br>
-
-Pracujemy nad:
-
-meczami,
-kursami,
-kuponami,
-rankingiem graczy
-
-<br><br>
-
-Dziękujemy za testowanie.
-
-</p>
-
-<p
-style="
-color:#3cff00;
-font-size:11px;
-text-align:center;
-margin-top:10px;
-font-weight:bold;
-">
-
-Beta 0.5
-
-</p>
-
-</div>
-
-</div>
-
-<!-- ZMIANA NICKU -->
-
-<div
-class="modal"
-id="nickModal">
-
-<div class="modal-box">
-
-<h3>
-
-Zmień nick
-
-</h3>
-
-<input
-id="nickInput"
-placeholder="Nowy nick">
-
-<button
-class="green"
-onclick="saveNick()">
-
-Zapisz
-
-</button>
-
-</div>
-
-</div>
-
-<!-- WPŁATA -->
-
-<div
-class="modal"
-id="depositModal">
-
-<div class="modal-box">
-
-<h3>
-
-Wpłata środków
-
-</h3>
-
-<input
-type="number"
-id="amountInput"
-placeholder="Wpisz kwotę">
-
-<p
-style="
-margin-top:10px;
-">
-
-Minimalna wpłata:
-5 zł
-
-</p>
-
-<p
-style="
-margin-top:10px;
-">
-
-Sugestie:
-
-5 | 10 | 20 | 50 | 100
-
-</p>
-
-<button
-class="green"
-onclick="showBlik()">
-
-Dalej
-
-</button>
-
-</div>
-
-</div>
-
-<!-- ŁADOWANIE WPŁATY -->
-
-<div
-class="modal"
-id="loadingPay">
-
-<div class="modal-box">
-
-<h3>
-
-Przetwarzanie...
-
-</h3>
-
-<div class="loader"></div>
-
-</div>
-
-</div>
-
-<!-- KOD -->
-
-<div
-class="modal"
-id="blikModal">
-
-<div class="modal-box">
-
-<h3>
-
-Wpisz kod wpłaty
-
-</h3>
-
-<input
-id="blikInput"
-placeholder="Kod wpłaty">
-
-<button
-class="green"
-onclick="confirmDeposit()">
-
-Potwierdź
-
-</button>
-
-</div>
-
-</div>
-
-<!-- SUKCES -->
-
-<div
-class="modal"
-id="successModal">
-
-<div class="modal-box">
-
-<h3>
-
-Wpłata przyjęta
-
-</h3>
-
-<p
-style="
-text-align:center;
-margin-top:15px;
-">
-
-Środki zostały
-dodane do salda.
-
-</p>
-
-<button
-class="green"
-onclick="backToLobby()">
-
-Wróć do MAKS BET
-
-</button>
-
-</div>
-
-</div>
-
-<style>
-
-.modal{
-
-display:none;
-
-position:fixed;
-inset:0;
-
-background:
-rgba(0,0,0,.75);
-
-justify-content:center;
-align-items:center;
-
-z-index:2000;
-
+<!-- JS CORE -->
+<script>
+function showTab(tab){
+  document.querySelectorAll('.tab').forEach(t=>t.style.display="none");
+
+  document.querySelectorAll('.bottom button')
+  .forEach(b=>b.classList.remove("active"));
+
+  if(tab==="matches"){
+    document.getElementById("tab-matches").style.display="block";
+    document.querySelectorAll(".bottom button")[0].classList.add("active");
+  }
+
+  if(tab==="all"){
+    document.getElementById("tab-all").style.display="block";
+    document.querySelectorAll(".bottom button")[1].classList.add("active");
+  }
+
+  if(tab==="kupon"){
+    document.getElementById("tab-kupon").style.display="block";
+    document.querySelectorAll(".bottom button")[2].classList.add("active");
+  }
 }
 
-.modal-box{
+/* FAKE LOADING */
+setTimeout(()=>{
+  document.getElementById("loading").style.display="none";
+  document.getElementById("app").style.display="block";
+},1500);
+</script>
 
-width:340px;
+<!-- WALL EFFECT -->
+<div class="left-wall"></div>
+<div class="right-wall"></div>
 
-background:
-rgba(11,31,63,.95);
+<!-- LOADING SCREEN -->
+<div id="loading">
+  <h1>MAKS BET</h1>
+  <div class="loader"></div>
+</div>
 
-padding:20px;
+<!-- APP -->
+<div id="app">
 
-border-radius:20px;
+  <!-- HEADER -->
+  <div class="header">
+    MAKS BET
+  </div>
 
-backdrop-filter:blur(15px);
+  <!-- CONTENT -->
+  <div class="content">
 
+    <!-- NAJBLIŻSZE MECZE -->
+    <div id="tab-matches" class="tab">
+      <div class="card">
+        <h2>Najbliższe spotkania</h2>
+        <div id="matchesList">
+          Brak meczy do wyświetlenia
+        </div>
+      </div>
+    </div>
+
+    <!-- WSZYSTKIE MECZE -->
+    <div id="tab-all" class="tab" style="display:none;">
+      <div class="card">
+        <h2>Wszystkie spotkania</h2>
+        <div id="allMatches">
+          Ładowanie...
+        </div>
+      </div>
+    </div>
+
+    <!-- KUPON -->
+    <div id="tab-kupon" class="tab" style="display:none;">
+      <div class="card">
+        <h2>Twój kupon</h2>
+        <div id="coupon">
+          Brak zakładów
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM MENU -->
+  <div class="bottom">
+    <button onclick="showTab('matches')" class="active">Mecze</button>
+    <button onclick="showTab('all')">Wszystkie</button>
+    <button onclick="showTab('kupon')">Kupon</button>
+  </div>
+
+</div>
+
+<!-- JS CORE -->
+<script>
+function showTab(tab){
+  document.querySelectorAll('.tab').forEach(t=>t.style.display="none");
+
+  document.querySelectorAll('.bottom button')
+  .forEach(b=>b.classList.remove("active"));
+
+  if(tab==="matches"){
+    document.getElementById("tab-matches").style.display="block";
+    document.querySelectorAll(".bottom button")[0].classList.add("active");
+  }
+
+  if(tab==="all"){
+    document.getElementById("tab-all").style.display="block";
+    document.querySelectorAll(".bottom button")[1].classList.add("active");
+  }
+
+  if(tab==="kupon"){
+    document.getElementById("tab-kupon").style.display="block";
+    document.querySelectorAll(".bottom button")[2].classList.add("active");
+  }
 }
 
-.modal-box h3{
+/* FAKE LOADING */
+setTimeout(()=>{
+  document.getElementById("loading").style.display="none";
+  document.getElementById("app").style.display="block";
+},1500);
+</script>
 
-text-align:center;
+</body>
+</html>
 
-margin-bottom:15px;
+<script>
+window.openMatch = function(id){
 
-}
+  let m = matches[id];
 
-.modal-box input{
+  let html = `
+    <div class="card">
 
-width:100%;
+      <h2>${m.team1} vs ${m.team2}</h2>
 
-padding:12px;
+      <br>
 
-border:none;
+      <button onclick="addToCoupon('${m.team1} vs ${m.team2}','1','${m.k1}')">
+        1 - ${m.k1}
+      </button>
 
-border-radius:10px;
+      <br><br>
 
-margin-top:10px;
+      <button onclick="addToCoupon('${m.team1} vs ${m.team2}','X','${m.kx}')">
+        X - ${m.kx}
+      </button>
 
-}
+      <br><br>
 
-.modal-box button{
+      <button onclick="addToCoupon('${m.team1} vs ${m.team2}','2','${m.k2}')">
+        2 - ${m.k2}
+      </button>
 
-width:100%;
+      <br><br>
 
-padding:12px;
+      <h3>Zdarzenia</h3>
+  `;
 
-border:none;
+  if(m.events && m.events.length > 0){
 
-border-radius:10px;
+    m.events.forEach(ev=>{
+      html += `
+        <button onclick="addToCoupon('${m.team1} vs ${m.team2}','${ev.name}','${ev.odd}')">
+          ${ev.name} (${ev.odd})
+        </button>
+        <br><br>
+      `;
+    });
 
-margin-top:10px;
+  } else {
+    html += `<p>Brak zdarzeń</p>`;
+  }
 
-cursor:pointer;
+  html += `
+      <br>
+      <button onclick="renderMatches()">⬅ Powrót</button>
 
-}
+    </div>
+  `;
 
-.green{
-
-background:#3cff00;
-
-color:black;
-
-font-weight:bold;
-
-}
-
-</style>
+  document.getElementById("matchesList").innerHTML = html;
+};
+</script>
 
 <script>
 
-let balance=
-Number(
-localStorage.getItem(
-"maksbet_balance"
-)
-)||0;
+/* 🧠 KUPON */
+let coupon = [];
 
-let nickname=
-localStorage.getItem(
-"maksbet_nick"
-)
-||"Gracz03";
+/* ➕ DODAJ DO KUPONU */
+window.addToCoupon = function(match, bet, odd){
 
-let selectedAmount=0;
+  coupon.push({
+    match,
+    bet,
+    odd: Number(odd)
+  });
 
-let matches=[];
-let coupon=[];
+  updateCoupon();
 
-/* LOADING */
-
-setTimeout(()=>{
-
-document.getElementById(
-"loading"
-).style.display=
-"none";
-
-document.getElementById(
-"app"
-).style.display=
-"block";
-
-updateUI();
-
-},3000);
-
-/* UI */
-
-function updateUI(){
-
-document.getElementById(
-"nickDisplay"
-).innerText=
-nickname;
-
-document.getElementById(
-"menuNick"
-).innerText=
-nickname;
-
-document.getElementById(
-"balanceDisplay"
-).innerText=
-balance.toFixed(2)+" zł";
-
-document.getElementById(
-"menuBalance"
-).innerText=
-balance.toFixed(2)+" zł";
-
-}
-
-/* PROFIL */
-
-function openProfile(){
-
-document.getElementById(
-"profileModal"
-).style.display=
-"flex";
-
-}
-
-function openNickModal(){
-
-document.getElementById(
-"profileModal"
-).style.display=
-"none";
-
-document.getElementById(
-"nickModal"
-).style.display=
-"flex";
-
-}
-
-function saveNick(){
-
-let n=
-document.getElementById(
-"nickInput"
-).value.trim();
-
-if(n.length<3){
-
-alert(
-"Nick za krótki"
-);
-
-return;
-
-}
-
-nickname=n;
-
-localStorage.setItem(
-"maksbet_nick",
-nickname
-);
-
-updateUI();
-
-document.getElementById(
-"nickModal"
-).style.display=
-"none";
-
-}
-
-/* WPŁATA */
-
-function openDeposit(){
-
-document.getElementById(
-"profileModal"
-).style.display=
-"none";
-
-document.getElementById(
-"depositModal"
-).style.display=
-"flex";
-
-}
-
-function showBlik(){
-
-selectedAmount=
-Number(
-document.getElementById(
-"amountInput"
-).value
-);
-
-if(selectedAmount<5){
-
-alert(
-"Minimalna wpłata to 5 zł"
-);
-
-return;
-
-}
-
-document.getElementById(
-"depositModal"
-).style.display=
-"none";
-
-document.getElementById(
-"loadingPay"
-).style.display=
-"flex";
-
-setTimeout(()=>{
-
-document.getElementById(
-"loadingPay"
-).style.display=
-"none";
-
-document.getElementById(
-"blikModal"
-).style.display=
-"flex";
-
-},1500);
-
-}
-
-function confirmDeposit(){
-
-let code=
-document.getElementById(
-"blikInput"
-).value;
-
-if(code==="151206"){
-
-document.getElementById(
-"blikModal"
-).style.display=
-"none";
-
-document.getElementById(
-"loadingPay"
-).style.display=
-"flex";
-
-setTimeout(()=>{
-
-document.getElementById(
-"loadingPay"
-).style.display=
-"none";
-
-document.getElementById(
-"successModal"
-).style.display=
-"flex";
-
-},1500);
-
-}
-else{
-
-alert(
-"Zły kod wpłaty"
-);
-
-}
-
-}
-
-function backToLobby(){
-
-balance+=selectedAmount;
-
-localStorage.setItem(
-"maksbet_balance",
-balance
-);
-
-updateUI();
-
-document.getElementById(
-"successModal"
-).style.display=
-"none";
-
-document.getElementById(
-"amountInput"
-).value="";
-
-document.getElementById(
-"blikInput"
-).value="";
-
-selectedAmount=0;
-
-}
-
-/* ZAKŁADKI */
-
-function tab(btn,type){
-
-document
-.querySelectorAll(
-".bottom button"
-)
-.forEach(x=>
-x.classList.remove(
-"active"
-)
-);
-
-btn.classList.add(
-"active"
-);
-
-if(type==="near"){
-
-renderMatches();
-
-}
-
-if(type==="all"){
-
-renderMatches();
-
-}
-
-if(type==="bets"){
-
-showCoupon();
-
-}
-
-}
-
-/* MECZE */
-
-function renderMatches(){
-
-let html="";
-
-matches.forEach((m,i)=>{
-
-html+=`
-
-<div
-class="card">
-
-<h2>
-
-${m.team1}
-vs
-${m.team2}
-
-</h2>
-
-<br>
-
-<div>
-
-1:
-${m.k1}
-
-|
-
-X:
-${m.kx}
-
-|
-
-2:
-${m.k2}
-
-</div>
-
-</div>
-
-`;
-
-});
-
-if(html===""){
-
-html=`
-
-<div class="card">
-
-<h2>
-Najbliższe spotkania
-</h2>
-
-<br>
-
-<p>
-Brak meczy do wyświetlenia
-</p>
-
-</div>
-
-`;
-
-}
-
-document.getElementById(
-"content"
-).innerHTML=
-html;
-
-}
-
-updateUI();
-
-let isAdmin=false;
-
-/* F10 LOGIN */
-
-document.addEventListener(
-"keydown",
-function(e){
-
-if(e.key==="F10"){
-
-e.preventDefault();
-
-openAdminLogin();
-
-}
-
-if(e.key==="F9"){
-
-e.preventDefault();
-
-adminLogout();
-
-}
-
-}
-);
-
-function openAdminLogin(){
-
-let login=
-prompt(
-"Login admina"
-);
-
-if(login===null)return;
-
-let pass=
-prompt(
-"Hasło admina"
-);
-
-if(pass===null)return;
-
-if(
-
-login==="adminmaksbet01"
-
-&&
-
-pass==="SowanowackiAdminMAKSBET!!1"
-
-){
-
-isAdmin=true;
-
-showAdminPanel();
-
-alert(
-"Zalogowano jako admin"
-);
-
-}
-else{
-
-alert(
-"Błędne dane"
-);
-
-}
-
-}
-
-/* WYLOGOWANIE */
-
-function adminLogout(){
-
-if(!isAdmin)return;
-
-isAdmin=false;
-
-let panel=
-document.getElementById(
-"adminPanel"
-);
-
-if(panel){
-
-panel.remove();
-
-}
-
-alert(
-"Wylogowano administratora"
-);
-
-}
-
-/* PANEL */
-
-function showAdminPanel(){
-
-if(
-document.getElementById(
-"adminPanel"
-)
-){
-return;
-}
-
-let panel=
-document.createElement(
-"div"
-);
-
-panel.id=
-"adminPanel";
-
-panel.innerHTML=`
-
-<div style="
-position:fixed;
-top:15px;
-left:15px;
-z-index:9999;
-">
-
-<button
-onclick="toggleAdminMenu()"
-style="
-padding:12px;
-background:gold;
-border:none;
-border-radius:12px;
-font-weight:bold;
-cursor:pointer;
-">
-
-👑 ADMIN
-
-</button>
-
-<div
-id="adminMenu"
-style="
-display:none;
-width:300px;
-margin-top:10px;
-padding:15px;
-background:rgba(0,0,0,.85);
-backdrop-filter:blur(10px);
-border-radius:15px;
-">
-
-<button
-onclick="adminAddMatch()">
-
-⚽ Dodaj mecz
-
-</button>
-
-<br><br>
-
-<button
-onclick="adminAddEvent()">
-
-🎯 Dodaj zdarzenie
-
-</button>
-
-<br><br>
-
-<button
-onclick="adminAddMoney()">
-
-💰 Dodaj środki
-
-</button>
-
-<br><br>
-
-<button
-onclick="adminRemoveMoney()">
-
-💸 Usuń środki
-
-</button>
-
-<br><br>
-
-<button
-onclick="adminMessage()">
-
-📢 Dodaj ogłoszenie
-
-</button>
-
-<br><br>
-
-<button
-onclick="removeAnnouncement()">
-
-🗑 Usuń ogłoszenie
-
-</button>
-
-</div>
-
-</div>
-
-`;
-
-document.body.appendChild(
-panel
-);
-
-}
-
-function toggleAdminMenu(){
-
-let menu=
-document.getElementById(
-"adminMenu"
-);
-
-menu.style.display=
-menu.style.display==="block"
-?
-"none"
-:
-"block";
-
-}
-
-/* SALDO */
-
-function adminAddMoney(){
-
-let amount=
-Number(
-prompt(
-"Ile dodać?"
-)
-);
-
-if(amount>0){
-
-balance+=amount;
-
-localStorage.setItem(
-"maksbet_balance",
-balance
-);
-
-updateUI();
-
-alert(
-"Dodano "+amount+" zł"
-);
-
-}
-
-}
-
-function adminRemoveMoney(){
-
-let amount=
-Number(
-prompt(
-"Ile usunąć?"
-)
-);
-
-if(amount>0){
-
-balance-=amount;
-
-if(balance<0){
-
-balance=0;
-
-}
-
-localStorage.setItem(
-"maksbet_balance",
-balance
-);
-
-updateUI();
-
-alert(
-"Usunięto "+amount+" zł"
-);
-
-}
-
-}
-
-/* MECZE */
-
-function adminAddMatch(){
-
-let team1=
-prompt(
-"Drużyna 1"
-);
-
-if(!team1)return;
-
-let team2=
-prompt(
-"Drużyna 2"
-);
-
-if(!team2)return;
-
-let k1=
-prompt(
-"Kurs 1"
-);
-
-let kx=
-prompt(
-"Kurs X"
-);
-
-let k2=
-prompt(
-"Kurs 2"
-);
-
-matches.push({
-
-team1:team1,
-team2:team2,
-
-k1:k1,
-kx:kx,
-k2:k2,
-
-events:[]
-
-});
-
-renderMatches();
-
-alert(
-"Dodano mecz"
-);
-
-}
-
-/* OGŁOSZENIA */
-
-function adminMessage(){
-
-let txt=
-prompt(
-"Treść ogłoszenia"
-);
-
-if(!txt)return;
-
-let bar=
-document.getElementById(
-"adminNews"
-);
-
-if(!bar){
-
-bar=
-document.createElement(
-"div"
-);
-
-bar.id=
-"adminNews";
-
-bar.style.cssText=`
-
-position:fixed;
-top:70px;
-left:0;
-width:100%;
-padding:10px;
-background:red;
-text-align:center;
-font-weight:bold;
-z-index:9998;
-
-`;
-
-document.body.appendChild(
-bar
-);
-
-}
-
-bar.innerHTML=
-"📢 "+txt;
-
-}
-
-function removeAnnouncement(){
-
-let bar=
-document.getElementById(
-"adminNews"
-);
-
-if(bar){
-
-bar.remove();
-
-alert(
-"Ogłoszenie usunięte"
-);
-
-}
-
-}
-
-/* ZDARZENIA */
-
-function adminAddEvent(){
-
-if(matches.length===0){
-
-alert(
-"Najpierw dodaj mecz"
-);
-
-return;
-
-}
-
-let id=
-Number(
-prompt(
-"Numer meczu (0 = pierwszy mecz)"
-)
-);
-
-if(
-isNaN(id)
-||
-!matches[id]
-){
-
-alert(
-"Nie ma takiego meczu"
-);
-
-return;
-
-}
-
-let eventName=
-prompt(
-
-`Wybierz zdarzenie:
-
-Powyżej 0.5 gola
-Powyżej 1.5 gola
-Powyżej 2.5 gola
-Powyżej 3.5 gola
-
-Gole 1 połowa
-Gole 2 połowa
-
-Powyżej 3.5 kartek
-Powyżej 5.5 kartek
-
-Powyżej 7.5 rożnych
-Powyżej 9.5 rożnych
-
-VAR będzie
-VAR nie będzie
-
-Spalony będzie
-Spalonego nie będzie
-
-Rzut karny będzie
-
-Obie strzelą
-
-Drużyna 1 strzeli
-Drużyna 2 strzeli`
-
-);
-
-if(!eventName)return;
-
-let odd=
-prompt(
-"Kurs"
-);
-
-if(!odd)return;
-
-matches[id].events.push({
-
-name:eventName,
-odd:odd
-
-});
-
-alert(
-"Dodano zdarzenie"
-);
-
-}
-
-/* OTWIERANIE MECZU */
-
-function openMatch(id){
-
-let match=
-matches[id];
-
-let html=`
-
-<div class="card">
-
-<h2>
-
-${match.team1}
-vs
-${match.team2}
-
-</h2>
-
-<br>
-
-<button
-onclick="addToCoupon(
-'${match.team1} vs ${match.team2}',
-'1',
-'${match.k1}'
-)">
-
-1 - ${match.k1}
-
-</button>
-
-<br><br>
-
-<button
-onclick="addToCoupon(
-'${match.team1} vs ${match.team2}',
-'X',
-'${match.kx}'
-)">
-
-X - ${match.kx}
-
-</button>
-
-<br><br>
-
-<button
-onclick="addToCoupon(
-'${match.team1} vs ${match.team2}',
-'2',
-'${match.k2}'
-)">
-
-2 - ${match.k2}
-
-</button>
-
-`;
-
-if(match.events){
-
-match.events.forEach(ev=>{
-
-html+=`
-
-<br><br>
-
-<button
-onclick="addToCoupon(
-'${match.team1} vs ${match.team2}',
-'${ev.name}',
-'${ev.odd}'
-)">
-
-${ev.name}
-
-(${ev.odd})
-
-</button>
-
-`;
-
-});
-
-}
-
-html+=`
-
-<br><br>
-
-<button
-onclick="renderMatches()">
-
-⬅ Powrót
-
-</button>
-
-</div>
-
-`;
-
-document.getElementById(
-"content"
-).innerHTML=
-html;
-
-}
-
-/* KUPON */
-
-function addToCoupon(
-match,
-bet,
-odd
-){
-
-coupon.push({
-
-match:match,
-bet:bet,
-odd:Number(odd)
-
-});
-
-updateCouponButton();
-
-alert(
-"Dodano do kuponu"
-);
-
-}
-
-/* PRZYCISK KUPONU */
-
-function updateCouponButton(){
-
-let btn=
-document.getElementById(
-"couponButton"
-);
-
-if(!btn)return;
-
-if(coupon.length>0){
-
-btn.style.display=
-"block";
-
-btn.innerHTML=
-"🎟 Kupon ("+
-coupon.length+
-")";
-
-}
-else{
-
-btn.style.display=
-"none";
-
-}
-
-}
-
-/* KU PON */
-
-function showCoupon(){
-
-let html="";
-
-if(coupon.length===0){
-
-html=`
-
-<div class="card">
-
-<h2>
-Twój kupon
-</h2>
-
-<br>
-
-<p>
-Brak zdarzeń
-</p>
-
-</div>
-
-`;
-
-}
-else{
-
-let totalOdd=1;
-
-html=`
-
-<div class="card">
-
-<h2>
-Twój kupon
-</h2>
-
-`;
-
-coupon.forEach((c,index)=>{
-
-totalOdd*=Number(c.odd);
-
-html+=`
-
-<hr>
-
-<p>
-
-${c.match}
-
-<br><br>
-
-${c.bet}
-
-<br><br>
-
-Kurs:
-${c.odd}
-
-</p>
-
-<br>
-
-<button
-onclick="removeCoupon(${index})">
-
-❌ Usuń
-
-</button>
-
-`;
-
-});
-
-html+=`
-
-<hr>
-
-<br>
-
-<p>
-
-Łączny kurs:
-
-<b>
-
-${totalOdd.toFixed(2)}
-
-</b>
-
-</p>
-
-<br>
-
-<input
-
-type="number"
-
-id="stakeInput"
-
-placeholder="Stawka">
-
-<br><br>
-
-<p id="possibleWin">
-
-Możliwa wygrana:
-0 zł
-
-</p>
-
-<br>
-
-<button
-onclick="calculateWin()">
-
-Oblicz wygraną
-
-</button>
-
-<br><br>
-
-<button
-onclick="placeBet()">
-
-🎟 OBSTAW
-
-</button>
-
-</div>
-
-`;
-
-}
-
-document.getElementById(
-"content"
-).innerHTML=
-html;
-
-}
-
-/* USUWANIE */
-
-function removeCoupon(id){
-
-coupon.splice(id,1);
-
-updateCouponButton();
-
-showCoupon();
-
-}
-
-/* LICZENIE */
-
-function calculateWin(){
-
-let stake=
-Number(
-document.getElementById(
-"stakeInput"
-).value
-);
-
-let totalOdd=1;
-
-coupon.forEach(c=>{
-
-totalOdd*=
-Number(c.odd);
-
-});
-
-let win=
-stake*
-totalOdd;
-
-document.getElementById(
-"possibleWin"
-).innerHTML=
-
-"Możliwa wygrana: <b>"+
-
-win.toFixed(2)+
-
-" zł</b>";
-
-}
-
-/* OBSTAW */
-
-function placeBet(){
-
-let stake=
-Number(
-document.getElementById(
-"stakeInput"
-).value
-);
-
-if(stake<=0){
-
-alert(
-"Podaj stawkę"
-);
-
-return;
-
-}
-
-if(balance<stake){
-
-alert(
-"Brak środków"
-);
-
-return;
-
-}
-
-balance-=stake;
-
-localStorage.setItem(
-"maksbet_balance",
-balance
-);
-
-updateUI();
-
-coupon=[];
-
-updateCouponButton();
-
-alert(
-"Zakład przyjęty"
-);
-
-showCoupon();
-
-}
-
-/* HISTORIA ZAKŁADÓW */
-
-let betHistory=[];
-
-/* ZAPIS HISTORII */
-
-function saveBetHistory(
-stake,
-possibleWin
-){
-
-betHistory.push({
-
-date:
-new Date()
-.toLocaleString(),
-
-stake:stake,
-
-possibleWin:
-possibleWin
-
-});
-
-}
-
-/* NOWA WERSJA PLACEBET */
-
-function placeBet(){
-
-let stake=
-Number(
-document.getElementById(
-"stakeInput"
-).value
-);
-
-if(stake<=0){
-
-alert(
-"Podaj stawkę"
-);
-
-return;
-
-}
-
-if(balance<stake){
-
-alert(
-"Brak środków"
-);
-
-return;
-
-}
-
-let totalOdd=1;
-
-coupon.forEach(c=>{
-
-totalOdd*=
-Number(c.odd);
-
-});
-
-let possibleWin=
-stake*
-totalOdd;
-
-saveBetHistory(
-stake,
-possibleWin
-);
-
-balance-=stake;
-
-localStorage.setItem(
-"maksbet_balance",
-balance
-);
-
-updateUI();
-
-coupon=[];
-
-updateCouponButton();
-
-alert(
-"Zakład przyjęty"
-);
-
-showCoupon();
-
-}
-
-/* HISTORIA */
-
-function showHistory(){
-
-let html=`
-
-<div class="card">
-
-<h2>
-
-Historia zakładów
-
-</h2>
-
-`;
-
-if(
-betHistory.length===0
-){
-
-html+=`
-
-<br>
-
-Brak historii
-
-`;
-
-}
-else{
-
-betHistory.forEach(h=>{
-
-html+=`
-
-<hr>
-
-<p>
-
-${h.date}
-
-<br><br>
-
-Stawka:
-${h.stake} zł
-
-<br><br>
-
-Możliwa wygrana:
-
-${h.possibleWin.toFixed(2)} zł
-
-</p>
-
-`;
-
-});
-
-}
-
-html+=`
-
-</div>
-
-`;
-
-document.getElementById(
-"content"
-).innerHTML=
-html;
-
-}
-
-/* ZAMYKANIE MODALI */
-
-window.onclick=
-function(e){
-
-[
-"profileModal",
-"nickModal",
-"depositModal",
-"loadingPay",
-"blikModal",
-"successModal"
-]
-.forEach(id=>{
-
-let el=
-document.getElementById(
-id
-);
-
-if(
-e.target===el
-){
-
-el.style.display=
-"none";
-
-}
-
-});
-
+  alert("Dodano do kuponu");
 };
 
-updateUI();
+/* 🔄 UPDATE KUPONU */
+function updateCoupon(){
 
-if("serviceWorker" in navigator){
+  let el = document.getElementById("coupon");
 
-window.addEventListener(
-"load",
-()=>{
+  if(coupon.length === 0){
+    el.innerHTML = "Brak zakładów";
+    return;
+  }
 
-navigator.serviceWorker
-.register(
-"./service-worker.js"
-)
-.then(()=>{
+  let html = "";
+  let totalOdd = 1;
 
-console.log(
-"MAKS BET gotowy"
-);
+  coupon.forEach((c,i)=>{
 
-});
+    totalOdd *= c.odd;
 
-});
+    html += `
+      <div class="card">
+        <p>${c.match}</p>
+        <b>${c.bet}</b>
+        <p>Kurs: ${c.odd}</p>
 
-}
+        <button onclick="removeCoupon(${i})">
+          ❌ usuń
+        </button>
+      </div>
+    `;
+  });
 
-</script>
+  html += `
+    <hr>
+    <h3>Kurs łączny: ${totalOdd.toFixed(2)}</h3>
 
-  <script>
-let deferredPrompt;
+    <input id="stake" type="number" placeholder="Stawka">
 
-window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
+    <br><br>
 
-  let btn = document.createElement("button");
-  btn.innerText = "📱 Pobierz na telefon";
-  btn.style.cssText = `
-    position:fixed;
-    top:10px;
-    left:50%;
-    transform:translateX(-50%);
-    z-index:9999;
-    padding:10px 20px;
-    border:none;
-    background:#3cff00;
-    font-weight:bold;
-    border-radius:10px;
-    cursor:pointer;
+    <button onclick="placeBet()">
+      🎟 OBSTAW
+    </button>
   `;
 
-  btn.onclick = async () => {
-    deferredPrompt.prompt();
-    await deferredPrompt.userChoice;
-    deferredPrompt = null;
-    btn.remove();
-  };
+  el.innerHTML = html;
+}
 
-  document.body.appendChild(btn);
-});
+/* ❌ USUŃ Z KUPONU */
+window.removeCoupon = function(i){
+  coupon.splice(i,1);
+  updateCoupon();
+};
+
+/* 💰 OBSTAW */
+window.placeBet = function(){
+
+  let stake = Number(document.getElementById("stake").value);
+
+  if(!stake || stake <= 0){
+    alert("Podaj stawkę");
+    return;
+  }
+
+  let totalOdd = 1;
+
+  coupon.forEach(c=>{
+    totalOdd *= c.odd;
+  });
+
+  let win = stake * totalOdd;
+
+  alert("Możliwa wygrana: " + win.toFixed(2) + " zł");
+
+  coupon = [];
+  updateCoupon();
+};
+
 </script>
 
-  <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+<script>
 
+/* 💰 SALDO */
+let balance = Number(localStorage.getItem("balance")) || 0;
+
+/* 📊 UPDATE SALDA */
+function updateBalance(){
+  localStorage.setItem("balance", balance);
+}
+
+/* 💸 PLACE BET (Z AKTUALIZACJĄ) */
+window.placeBet = function(){
+
+  let stake = Number(document.getElementById("stake").value);
+
+  if(!stake || stake <= 0){
+    alert("Podaj stawkę");
+    return;
+  }
+
+  let totalOdd = 1;
+
+  coupon.forEach(c=>{
+    totalOdd *= c.odd;
+  });
+
+  let win = stake * totalOdd;
+
+  if(balance < stake){
+    alert("Brak środków");
+    return;
+  }
+
+  balance -= stake;
+  updateBalance();
+
+  saveHistory(stake, win);
+
+  alert("Zakład przyjęty!\nWygrana: " + win.toFixed(2) + " zł");
+
+  coupon = [];
+  updateCoupon();
+  updateUIBalance();
+};
+
+/* 📜 HISTORIA */
+let history = JSON.parse(localStorage.getItem("history")) || [];
+
+function saveHistory(stake, win){
+
+  history.push({
+    date: new Date().toLocaleString(),
+    stake,
+    win
+  });
+
+  localStorage.setItem("history", JSON.stringify(history));
+}
+
+/* 📄 POKAŻ HISTORIĘ */
+window.showHistory = function(){
+
+  let html = `<div class="card"><h2>Historia zakładów</h2>`;
+
+  if(history.length === 0){
+    html += "<p>Brak historii</p>";
+  }
+
+  history.forEach(h=>{
+    html += `
+      <div class="card">
+        <p>${h.date}</p>
+        <p>Stawka: ${h.stake} zł</p>
+        <p>Wygrana: ${h.win.toFixed(2)} zł</p>
+      </div>
+    `;
+  });
+
+  html += "</div>";
+
+  document.getElementById("matchesList").innerHTML = html;
+};
+
+/* 🔄 UPDATE UI SALDA */
+function updateUIBalance(){
+
+  let el = document.getElementById("balanceDisplay");
+
+  if(el){
+    el.innerText = balance.toFixed(2) + " zł";
+  }
+}
+
+/* START */
+updateUIBalance();
+
+</script>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+/* 🔥 FIREBASE */
 const firebaseConfig = {
-  apiKey: "TWOJ_KEY",
+  apiKey: "TWOJ_API_KEY",
   authDomain: "maks-bet.firebaseapp.com",
   projectId: "maks-bet",
-  storageBucket: "maks-bet.firebasestorage.app",
+  storageBucket: "maks-bet.appspot.com",
   messagingSenderId: "342279278423",
   appId: "1:342279278423:web:094610e6c8a23e8f667812"
 };
@@ -2302,23 +501,284 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-async function loadMatches() {
-  const snap = await getDocs(collection(db, "matches"));
+/* 👤 USER ID (PROSTY SYSTEM) */
+let userId = localStorage.getItem("userId");
 
-  matches = [];
+if(!userId){
+  userId = "user_" + Math.floor(Math.random()*999999999);
+  localStorage.setItem("userId", userId);
+}
 
-  snap.forEach(doc => {
-    matches.push(doc.data());
+/* 💰 POBIERZ SALDO */
+async function loadBalance(){
+
+  const ref = doc(db, "users", userId);
+  const snap = await getDoc(ref);
+
+  if(snap.exists()){
+    balance = snap.data().balance || 0;
+  } else {
+    await setDoc(ref, { balance: 0 });
+    balance = 0;
+  }
+
+  updateUIBalance();
+}
+
+/* 💾 ZAPIS SALDA */
+async function saveBalance(){
+
+  const ref = doc(db, "users", userId);
+
+  await setDoc(ref, {
+    balance: balance
+  });
+
+}
+
+/* 💸 NADPISZ PLACE BET (ONLINE) */
+window.placeBet = async function(){
+
+  let stake = Number(document.getElementById("stake").value);
+
+  if(!stake || stake <= 0){
+    alert("Podaj stawkę");
+    return;
+  }
+
+  let totalOdd = 1;
+
+  coupon.forEach(c=>{
+    totalOdd *= c.odd;
+  });
+
+  let win = stake * totalOdd;
+
+  if(balance < stake){
+    alert("Brak środków");
+    return;
+  }
+
+  balance -= stake;
+
+  await saveBalance();
+
+  saveHistory(stake, win);
+
+  alert("Zakład przyjęty!");
+
+  coupon = [];
+  updateCoupon();
+  updateUIBalance();
+};
+
+/* 🔄 START */
+loadBalance();
+
+</script>
+
+<script>
+
+import {
+  collection,
+  getDocs,
+  query,
+  orderBy,
+  limit
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+/* 🏆 RANKING */
+window.showRanking = async function(){
+
+  const q = query(
+    collection(db, "users"),
+    orderBy("balance", "desc"),
+    limit(10)
+  );
+
+  const snap = await getDocs(q);
+
+  let html = `
+    <div class="card">
+      <h2>🏆 Ranking graczy</h2>
+  `;
+
+  let i = 1;
+
+  snap.forEach(doc=>{
+    let d = doc.data();
+
+    html += `
+      <div class="card">
+        <h3>#${i}</h3>
+        <p>ID: ${doc.id}</p>
+        <p>Saldo: ${d.balance.toFixed(2)} zł</p>
+      </div>
+    `;
+    i++;
+  });
+
+  html += "</div>";
+
+  document.getElementById("matchesList").innerHTML = html;
+};
+
+/* 🔘 DODAJ DO MENU */
+window.showRankingButton = function(){
+
+  let btn = document.createElement("button");
+  btn.innerText = "🏆 Ranking";
+  btn.style.position = "fixed";
+  btn.style.bottom = "80px";
+  btn.style.right = "10px";
+  btn.style.padding = "10px";
+  btn.style.zIndex = "9999";
+
+  btn.onclick = showRanking;
+
+  document.body.appendChild(btn);
+};
+
+showRankingButton();
+
+</script>
+
+<script>
+
+import {
+  collection,
+  getDocs,
+  query,
+  orderBy,
+  limit
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+/* 🏆 RANKING */
+window.showRanking = async function(){
+
+  const q = query(
+    collection(db, "users"),
+    orderBy("balance", "desc"),
+    limit(10)
+  );
+
+  const snap = await getDocs(q);
+
+  let html = `
+    <div class="card">
+      <h2>🏆 Ranking graczy</h2>
+  `;
+
+  let i = 1;
+
+  snap.forEach(doc=>{
+    let d = doc.data();
+
+    html += `
+      <div class="card">
+        <h3>#${i}</h3>
+        <p>ID: ${doc.id}</p>
+        <p>Saldo: ${d.balance.toFixed(2)} zł</p>
+      </div>
+    `;
+    i++;
+  });
+
+  html += "</div>";
+
+  document.getElementById("matchesList").innerHTML = html;
+};
+
+/* 🔘 DODAJ DO MENU */
+window.showRankingButton = function(){
+
+  let btn = document.createElement("button");
+  btn.innerText = "🏆 Ranking";
+  btn.style.position = "fixed";
+  btn.style.bottom = "80px";
+  btn.style.right = "10px";
+  btn.style.padding = "10px";
+  btn.style.zIndex = "9999";
+
+  btn.onclick = showRanking;
+
+  document.body.appendChild(btn);
+};
+
+showRankingButton();
+
+</script>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+/* 🔥 FIREBASE CONFIG */
+const firebaseConfig = {
+  apiKey: "TWOJ_API_KEY",
+  authDomain: "maks-bet.firebaseapp.com",
+  projectId: "maks-bet",
+  storageBucket: "maks-bet.appspot.com",
+  messagingSenderId: "342279278423",
+  appId: "1:342279278423:web:094610e6c8a23e8f667812"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+/* 🧠 GLOBAL MATCHES */
+window.matches = [];
+
+/* 🔄 LOAD MECZY */
+async function loadMatches(){
+
+  const snap = await getDocs(collection(db,"matches"));
+
+  window.matches = [];
+
+  snap.forEach(doc=>{
+    window.matches.push(doc.data());
   });
 
   renderMatches();
 }
 
-// AUTO UPDATE CO 5 SEKUND
-setInterval(loadMatches, 5000);
+/* 🎯 RENDER FIX */
+window.renderMatches = function(){
 
+  let html = "";
+
+  window.matches.forEach((m,i)=>{
+
+    html += `
+      <div class="card" onclick="openMatch(${i})">
+        <h2>${m.team1} vs ${m.team2}</h2>
+        <p>1: ${m.k1} | X: ${m.kx} | 2: ${m.k2}</p>
+      </div>
+    `;
+
+  });
+
+  if(window.matches.length === 0){
+    html = `<div class="card">Brak meczy</div>`;
+  }
+
+  document.getElementById("matchesList").innerHTML = html;
+  document.getElementById("allMatches").innerHTML = html;
+};
+
+/* 🔄 AUTO REFRESH */
+setInterval(loadMatches, 5000);
 loadMatches();
+
 </script>
 
 </body>
 </html>
+
+<body>
