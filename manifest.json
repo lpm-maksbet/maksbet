@@ -1,0 +1,21 @@
+{
+  "name": "MAKS BET",
+  "short_name": "MAKS BET",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#071426",
+  "theme_color": "#071426",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
