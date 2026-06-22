@@ -2252,5 +2252,73 @@ console.log(
 
 </script>
 
+  <script>
+let deferredPrompt;
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+
+  let btn = document.createElement("button");
+  btn.innerText = "📱 Pobierz na telefon";
+  btn.style.cssText = `
+    position:fixed;
+    top:10px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:9999;
+    padding:10px 20px;
+    border:none;
+    background:#3cff00;
+    font-weight:bold;
+    border-radius:10px;
+    cursor:pointer;
+  `;
+
+  btn.onclick = async () => {
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    btn.remove();
+  };
+
+  document.body.appendChild(btn);
+});
+</script>
+
+  <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "TWOJ_KEY",
+  authDomain: "maks-bet.firebaseapp.com",
+  projectId: "maks-bet",
+  storageBucket: "maks-bet.firebasestorage.app",
+  messagingSenderId: "342279278423",
+  appId: "1:342279278423:web:094610e6c8a23e8f667812"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+async function loadMatches() {
+  const snap = await getDocs(collection(db, "matches"));
+
+  matches = [];
+
+  snap.forEach(doc => {
+    matches.push(doc.data());
+  });
+
+  renderMatches();
+}
+
+// AUTO UPDATE CO 5 SEKUND
+setInterval(loadMatches, 5000);
+
+loadMatches();
+</script>
+
 </body>
 </html>
